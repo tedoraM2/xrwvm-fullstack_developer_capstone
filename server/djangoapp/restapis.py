@@ -21,9 +21,15 @@ def get_request(endpoint, **kwargs):
         print(f"Error making GET request to {endpoint}: {str(e)}")
         raise e
 
-# def analyze_review_sentiments(text):
-# request_url = sentiment_analyzer_url+"analyze/"+text
-# Add code for retrieving sentiments
+def analyze_review_sentiments(text):
+    request_url = sentiment_analyzer_url + "analyze/" + text
+    try:
+        response = requests.get(request_url)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error analyzing sentiment: {str(e)}")
+        return None
 
 def post_review(data_dict):
     request_url = backend_url+"/insert_review"
